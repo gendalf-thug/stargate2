@@ -1,29 +1,20 @@
 import React, { useState } from 'react'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-// import { searchChanged, getMovies } from '../actions'
-import { ButtonLong, Header, ImageCard, Search } from '../../components'
+import { EmptyList, Header, ImageCard, Loading, Search } from '../../components'
 import { nanoid } from 'nanoid/non-secure'
-import { useSelector } from 'react-redux'
-
-// const url = 'https://api.tvmaze.com/search/shows?q=stargate'
+import { useGetMovieQuery } from '../../store/movieApi'
 
 export function HomeScreen({ navigation }) {
   const [visibleSearch, setVisibleSearch] = useState(false)
-  const [filterText, setFilterText] = useState('')
+  const [filterText, setFilterText] = useState('stargate')
 
-  const list = useSelector(state => state.movie.data).filter(a =>
-    a.name.toLowerCase().includes(filterText.toLowerCase())
-  )
-
+  const { data, error, isLoading } = useGetMovieQuery(filterText)
   function onSearch(text) {
-    setFilterText(text)
-  }
-  function goAddMovie() {
-    navigation.navigate('ADD_MOVIE_SCREEN')
+    setFilterText(text ? text : 'stargate')
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       {visibleSearch ? (
         <Search
           colorRight={'#fff'}
@@ -41,31 +32,27 @@ export function HomeScreen({ navigation }) {
           onPressRight={() => setVisibleSearch(true)}
         />
       )}
-      <FlatList
-        data={list}
-        numColumns={2}
-        ListHeaderComponent={
-          <>
-            <View style={{ height: 20 }} />
-            <ButtonLong
-              iconName="create-outline"
-              title="Create new"
-              onPress={goAddMovie}
+      {isLoading ? (
+        <Loading />
+      ) : data.length === 0 ? (
+        <EmptyList />
+      ) : (
+        <FlatList
+          data={data.filter(a => (a?.show?.image?.original ? true : false))}
+          numColumns={2}
+          ListHeaderComponent={<View style={{ height: 20 }} />}
+          ListFooterComponent={<View style={{ height: 100 }} />}
+          contentContainerStyle={{ alignItems: 'center' }}
+          keyExtractor={() => nanoid()}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <ImageCard
+              data={item}
+              onPress={() => navigation.navigate('DETAIL_SCREEN', { data: item.show })}
             />
-            <View style={{ height: 20 }} />
-          </>
-        }
-        ListFooterComponent={<View style={{ height: 100 }} />}
-        contentContainerStyle={{ alignItems: 'center' }}
-        keyExtractor={item => nanoid()}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <ImageCard
-            data={item}
-            onPress={() => navigation.navigate('DETAIL_SCREEN', { show: item })}
-          />
-        )}
-      />
+          )}
+        />
+      )}
     </SafeAreaView>
   )
 }

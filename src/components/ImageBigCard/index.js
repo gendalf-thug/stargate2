@@ -2,9 +2,8 @@ import React from 'react'
 import { Image, View, StyleSheet } from 'react-native'
 import { W } from '../../constants'
 
-const ImageBigCard = ({ data }) => {
+const ImageBigCard = ({ image }) => {
   const { container, sub, cover } = styles
-  const { image } = data
   return (
     <View style={container}>
       <View style={sub}>

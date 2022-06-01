@@ -1,36 +1,16 @@
 import React from 'react'
-import { Image, View, Text, StyleSheet, Pressable, Alert } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { Image, View, Text, StyleSheet, Pressable } from 'react-native'
 import { W } from '../../constants'
-import { removeById } from '../../store/movieSlice'
 
 const width = W / 2 - 20
 const marginHorizontal = 5
 
 const ImageCard = ({ data, onPress }) => {
   const { container, sub, h1, cover } = styles
-  const { image, name, id } = data
-  const dispatch = useDispatch()
-  function openAlert() {
-    function del() {
-      dispatch(removeById(id))
-    }
-    Alert.alert(
-      'Confirm action',
-      'Are you sure you want to delete this movie?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        { text: 'Yes', onPress: del }
-      ],
-      { cancelable: true }
-    )
-  }
+  const { name } = data.show
+  const image = data.show.image.original
   return (
-    <Pressable onLongPress={openAlert} onPress={onPress} style={container}>
+    <Pressable onPress={onPress} style={container}>
       <View style={sub}>
         <Image style={cover} source={{ uri: image }} />
       </View>

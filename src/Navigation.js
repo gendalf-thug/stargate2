@@ -2,7 +2,7 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { HomeScreen, DelailsScreen, AddMovieScreen } from './screens'
+import { HomeScreen, DelailsScreen } from './screens'
 import { BLUE } from './constants'
 
 const Stack = createNativeStackNavigator()
@@ -20,11 +20,6 @@ export default function Navigation() {
           name="DETAIL_SCREEN"
           options={{ animation: 'slide_from_right' }}
           component={DelailsScreen}
-        />
-        <Stack.Screen
-          name="ADD_MOVIE_SCREEN"
-          options={{ animation: 'flip' }}
-          component={AddMovieScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

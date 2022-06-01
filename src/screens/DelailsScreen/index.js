@@ -4,9 +4,10 @@ import { Header, ImageBigCard } from '../../components'
 import { WHITE, BLUE, W } from '../../constants'
 
 export function DelailsScreen({ navigation, route }) {
-  const { show } = route.params
-  const { image, name, summary } = show
-  const data = { image, name }
+  const image = route.params.data.image.original
+  const text = route.params.data.summary
+  const summary = text ? text : 'No description'
+  const name = route.params.data.name
   const { container, sub, h1, h2 } = styles
   return (
     <View style={container}>
@@ -19,7 +20,7 @@ export function DelailsScreen({ navigation, route }) {
       />
       <ScrollView>
         <View style={sub}>
-          <ImageBigCard data={data} />
+          <ImageBigCard image={image} />
           <Text style={h1}>{name.toUpperCase()}</Text>
           <Text style={h2}>{summary.replace(/<[^>]+>/g, '')}</Text>
         </View>

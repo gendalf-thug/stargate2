@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { movieReducer } from './movieSlice'
+import { setupListeners } from '@reduxjs/toolkit/query/react'
+import { movieApi } from './movieApi'
 
 export const store = configureStore({
   reducer: {
-    movie: movieReducer
-  }
+    [movieApi.reducerPath]: movieApi.reducer
+  },
+  middleware: getMiddleware => getMiddleware().concat(movieApi.middleware)
 })
