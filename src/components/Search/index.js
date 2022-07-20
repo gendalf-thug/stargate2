@@ -12,7 +12,7 @@ const Search = ({ iconRight, onSubmit, placeholder, value, onBlur, colorRight })
   }
 
   return (
-    <View style={[container, { paddingTop: top }]}>
+    <View style={[container, { paddingTop: top + 10, height: 70 + top }]}>
       <View style={sub}>
         <TextInput
           autoFocus
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     paddingHorizontal: 20,
     backgroundColor: BLUE,
-    height: 70,
     paddingVertical: 10
   }
 })

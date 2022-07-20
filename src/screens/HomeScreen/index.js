@@ -14,7 +14,7 @@ export function HomeScreen({ navigation }) {
     setFilterText(text ? text : 'stargate')
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {visibleSearch ? (
         <Search
           colorRight={'#fff'}
@@ -53,7 +53,7 @@ export function HomeScreen({ navigation }) {
           )}
         />
       )}
-    </SafeAreaView>
+    </View>
   )
 }
 

@@ -16,7 +16,7 @@ const Header = ({
 }) => {
   const { top } = useSafeAreaInsets()
   return (
-    <View style={[container, { paddingTop: top }]}>
+    <View style={[container, { paddingTop: top + 10 }]}>
       {iconLeft && (
         <TouchableOpacity style={leftIconStyle} onPress={onPress}>
           <Ionicons name={iconLeft} size={35} color={colorLeft} />
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     paddingHorizontal: 20,
     backgroundColor: BLUE,
-    height: 70,
     paddingVertical: 10
   },
   textStyle: {
